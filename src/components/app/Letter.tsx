@@ -7,7 +7,7 @@ interface Friend {
 }
 const resolveName = (id: number): string => {
   const recipients: Friend[] = [
-    { id: 1104, name: "Harry Lê" },
+    { id: 1104, name: "Hary Lê" },
     { id: 1807, name: "Thanh Thúy" },
     { id: 2204, name: "Minh Tâm" },
     { id: 2809, name: "Minh Hiếu" },
