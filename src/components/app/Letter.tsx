@@ -69,7 +69,7 @@ export const Letter: FC = () => {
               bạn sẽ làm ngày đặc biệt này thêm phần ý nghĩa.
             </>,
             <>
-              Thời gian: <strong>21 tháng 10, 2025</strong>
+              Thời gian: <strong>11 giờ ngày 21 tháng 10, 2025</strong>
             </>,
             <>
               Địa điểm: <strong>Trường Đại học Nông Lâm TP.HCM</strong>
