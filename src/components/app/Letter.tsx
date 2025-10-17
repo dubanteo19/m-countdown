@@ -13,6 +13,7 @@ const resolveName = (id: number): string => {
     { id: 2809, name: "Minh Hiếu" },
     { id: 2405, name: "Thị Thiết" },
     { id: 2607, name: "Anh Thư" },
+    { id: 2503, name: "Em iuuuu" },
   ];
   return recipients.find((f) => f.id == id)?.name ?? "Bạn thân mến";
 };
