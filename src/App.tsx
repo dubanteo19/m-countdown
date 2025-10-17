@@ -1,27 +1,41 @@
-import { motion, useAnimation } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
+import { useRef, useState } from "react";
 import "./App.css";
 import { CountDown } from "./components/app/CountDown";
-import LiquidText from "./components/app/liquid-text";
-import { SparkleBackground } from "./components/app/SparkleBackgroundBase";
-import { Letter } from "./components/app/Letter";
 import { Envelope } from "./components/app/Envelope";
+import { Letter } from "./components/app/Letter";
+import { SparkleBackground } from "./components/app/SparkleBackgroundBase";
+import LiquidText from "./components/app/liquid-text";
 function App() {
-  const letterControls = useAnimation();
-  const showLetter = async () => {
-    await letterControls.start({
-      y: ["50%", "-40%"],
-      opacity: [0, 1],
-      transition: { duration: 1.2, ease: "easeOut" },
-    });
+  const [showLetter, setShowLetter] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const handleShowLetter = async () => {
+    setShowLetter(true);
   };
   return (
-    <motion.div className="min-h-screen  flex-center flex-col  relative overflow-hidden bg-black p-4 ">
+    <div className="min-h-screen  flex-center flex-col  relative overflow-hidden bg-black p-4 ">
       <SparkleBackground />
-      <Envelope showLetter={showLetter} />
-      <Letter control={letterControls} />
       <LiquidText />
+      <AnimatePresence mode="wait">
+        {!showLetter && (
+          <Envelope
+            key="envelope"
+            showLetter={handleShowLetter}
+            playMusic={() => {
+              if (audioRef.current) {
+                audioRef.current.volume = 1.0;
+                audioRef.current.play();
+              }
+            }}
+          />
+        )}
+        {showLetter && <Letter key="letter" />}
+      </AnimatePresence>
       <CountDown />
-    </motion.div>
+      <audio ref={audioRef}>
+        <source src="/bg.mp3" type="audio/mpeg" />
+      </audio>
+    </div>
   );
 }
 

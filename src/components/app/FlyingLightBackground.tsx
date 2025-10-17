@@ -1,7 +1,6 @@
 import { motion, useMotionValue, animate } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const LIGHT_COUNT = 5;
 
 export default function FlyingLightBackground() {
   const [visible, setVisible] = useState(true);

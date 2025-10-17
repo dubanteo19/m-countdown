@@ -3,13 +3,13 @@ import { useCallback, useEffect, useState, type FC } from "react";
 
 interface EnvelopeProps {
   showLetter: () => Promise<void>;
+  playMusic: () => void;
 }
-export const Envelope: FC<EnvelopeProps> = ({ showLetter }) => {
+export const Envelope: FC<EnvelopeProps> = ({ showLetter, playMusic }) => {
   const controls = useAnimation();
   const flapControls = useAnimation();
   const waxControls = useAnimation();
   const [clicked, setClicked] = useState(false);
-
   useEffect(() => {
     if (!clicked) {
       controls.start({
@@ -58,7 +58,11 @@ export const Envelope: FC<EnvelopeProps> = ({ showLetter }) => {
       rotateX: [0, -140],
       transition: { duration: 1, ease: "easeInOut" },
     });
-
+    await new Promise((res) => setTimeout(res, 500));
+    controls.start({
+      opacity: [100, 0],
+      transition: { duration: 1, ease: "easeOut" },
+    });
     await new Promise((res) => setTimeout(res, 1000));
     // 💫 Step 5: Letter slides out
     await showLetter();
@@ -72,13 +76,15 @@ export const Envelope: FC<EnvelopeProps> = ({ showLetter }) => {
 
   return (
     <motion.div
-      initial={{ y: 0 }}
       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       animate={controls}
-      onClick={() => setClicked(true)}
-      className="z-10"
+      onClick={() => {
+        playMusic();
+        setClicked(true);
+      }}
+      className="z-20"
     >
-      <div className="relative w-30 h-20 cursor-pointer ">
+      <div className="relative  w-30 h-20 cursor-pointer ">
         {/* BACK PANEL (behind everything) */}
         <div className="absolute inset-0 bg-gradient-to-b from-amber-100 to-amber-200 border border-amber-400 rounded-sm shadow-lg" />
         {/* TOP FLAP */}
